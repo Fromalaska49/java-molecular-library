@@ -4,10 +4,11 @@ public class Molecule {
 	private int[] atomCount;
 	private int moleculeCount;
 	
-	public Molecule(String molecule){
+	public Molecule(String molecule) throws MoleculeException{
 		molecule = simplifyMolecule(molecule);
 		if(!isValidMolecule(molecule)){
 			System.out.println("Error: invalid molecule");
+			throw new MoleculeException("invalid molecule");
 		}
 
 		int index = 0;
@@ -34,6 +35,7 @@ public class Molecule {
 			else{
 				//No element detected
 				System.out.println("Error: no element detected");
+				throw new MoleculeException("no element detected");
 			}
 			while(index < molecule.length() && Character.isDigit(molecule.charAt(index))){
 				//a digit has been found
@@ -49,9 +51,10 @@ public class Molecule {
 		}
 	}
 	
-	public String getFormula(){
+	public String getFormula() throws MoleculeException{
 		if(this.atomCount.length != this.elements.length){
 			System.out.println("Error: atomCount and elements are out of sync");
+			throw new MoleculeException("atomCount and elements are out of sync");
 		}
 		String formula = "";
 		for(int i = 0; i < this.atomCount.length; i++){
@@ -82,14 +85,16 @@ public class Molecule {
 		return -1;
 	}
 	
+	/*
 	public String getNextElement(String molecule){
 		//assumes that the input has already been validated
 	}
+	*/
 	
 	/*
 	 * Expects that the molecule has already been simplified
 	 */
-	public boolean isValidMolecule(String molecule){
+	public boolean isValidMolecule(String molecule) throws MoleculeException{
 		//molecule = simplifyMolecule(molecule);
 		int index = 0;
 		while(index < molecule.length()){
@@ -103,7 +108,7 @@ public class Molecule {
 			else{
 				//No element detected
 				System.out.println("Error: no element detected");
-				return false;
+				throw new MoleculeException("no element detected");
 			}
 			while(index < molecule.length() && Character.isDigit(molecule.charAt(index))){
 				//a digit has been found
