@@ -42,7 +42,9 @@ public class Molecule {
 				strAtomCount += molecule.charAt(index);
 				index++;
 			}
-			intAtomCount = Integer.parseInt(strAtomCount);
+			if(strAtomCount.length() > 0){
+				intAtomCount = Integer.parseInt(strAtomCount);
+			}
 			if(intAtomCount > 0){
 				atomCount = intAtomCount;
 			}
